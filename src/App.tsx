@@ -1,18 +1,31 @@
 import * as React from "react";
-import "./App.css";
 import User from "./components/User";
 
 type State = {
 	count: number;
-	onClickButtonHandler: () => void;
 };
 
-class App extends React.Component<State> {
-	render() {
+class App extends React.PureComponent<{}, State> {
+	state: State = {
+		count: 0
+	};
+	private handleDecreaseButton() {
+		this.setState({ count: this.state.count - 1 });
+	}
+	private handleIncreaseButton() {
+		this.setState({ count: this.state.count + 1 });
+	}
+	render(): React.ReactNode {
 		return (
-			<div className="App">
-				<User families={{ brother: 2, sister: 1 }} name="takeru" age={25} />
-			</div>
+			<>
+				<div>{this.state.count}</div>
+				<User
+					name="takeru"
+					age={25}
+					onClickDecreaseButton={this.handleDecreaseButton.bind(this)}
+					onClickIncreaseButton={this.handleIncreaseButton.bind(this)}
+				/>
+			</>
 		);
 	}
 }
